@@ -1,4 +1,21 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <p>hello there!</p>
+    <div id="base">
+    <p>texto</p>
+    <div id="appContent">
+        <div class="box">
+        <h2>box 1</h2> {#} That would be the name{#}
+        <div id="recallsMenu">
+            {{ form(form) }}
+        </div>
+        <div id="recalls"> {#}This would be the recalls{#}
+            <p>Recall 1</p>
+            <p>Recall 2</p>
+        </div>
+        </div>
+        <div class="box">
+        <h2>box 2</h2>
+        </div>
+    </div>
+    </div>
 {% endblock %}

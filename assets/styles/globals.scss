@@ -1,1 +1,29 @@
 @import "~bootstrap/scss/bootstrap";
+body
+{
+    background-color: rgb(236, 216, 216);
+}
+#appContent{
+    display: inline-block;
+}
+.box{
+    border: 1px solid rgb(226, 83, 83);
+    min-width: 20em;
+    min-height: 30em;
+    display: inline-block;
+    margin-right: 5px;
+    & > h2{
+        color:rgb(236, 216, 216);
+    }
+}
+
+#recalls{
+    &Menu{
+        margin: 1.5em;
+        min-width: 150px;
+        border: 2px solid purple;
+    }
+    & > p{
+        color:rgb(65, 173, 236);
+    }
+}
