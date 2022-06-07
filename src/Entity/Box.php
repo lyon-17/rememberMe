@@ -18,7 +18,7 @@ class Box
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\OneToMany(mappedBy: 'target_box', targetEntity: recall::class)]
+    #[ORM\OneToMany(mappedBy: 'target_box', targetEntity: Recall::class)]
     private $list;
 
     public function __construct()

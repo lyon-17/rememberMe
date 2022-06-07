@@ -13,6 +13,7 @@ class BoxType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
+            ->add('new', SubmitType::class, ["label" => 'add new box'])
             ->add('save', SubmitType::class,["label" => 'add new recall']);
     }
 }

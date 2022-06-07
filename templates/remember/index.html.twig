@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <div id="base">
-    <p>texto</p>
+    <p>log:</p>
+    {% if log is defined %}
+    <p>{{log}}</p>
+    {% endif %}
     <div id="appContent">
-        <div class="box">
-        <h2>box 1</h2> {#} That would be the name{#}
         <div id="recallsMenu">
             {{ form(form) }}
         </div>
+        <div class="box">
+        <h2>box 1</h2> {#} That would be the name{#}
         <div id="recalls"> {#}This would be the recalls{#}
             <p>Recall 1</p>
             <p>Recall 2</p>
