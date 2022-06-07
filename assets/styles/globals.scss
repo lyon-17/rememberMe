@@ -16,6 +16,11 @@ body
         color:rgb(236, 216, 216);
     }
 }
+#base{
+    & > p{
+        color:aqua;
+    }
+}
 
 #recalls{
     &Menu{
