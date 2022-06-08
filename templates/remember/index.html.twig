@@ -12,10 +12,13 @@
         {% if boxes is defined %}
             {% for box in boxes %}
                 <div class="box">
-                    <h2>{{box.name}}</h2> {#} That would be the name{#}
-                    <div class="recalls"> {#}This would be the recalls{#}
-                        <p>Recall 1</p>
-                        <p>Recall 2</p>
+                    <h2>{{box.name}}</h2>
+                    <div class="recalls">
+                        {% for recall in recalls %}
+                                {% if box == recall.targetBox %}
+                                    <p>{{recall.name}}</p>
+                                {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             {% endfor %}
