@@ -39,16 +39,6 @@ class BoxRepository extends ServiceEntityRepository
         }
     }
 
-    public function getBoxes(): array
-    {
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager->createQuery(
-            'SELECT box.name
-             FROM App\Entity\Box box'
-        );
-        return $query->getResult();
-    }
-
     public function getBoxesName(): array
     {
         $entityManager = $this->getEntityManager();
