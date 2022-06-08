@@ -26,16 +26,18 @@ class RememberController extends AbstractController
         $box->setName('new box');
         $entityManager = $doctrine->getManager();
         $form = $this->createForm(Boxtype::class,$box);
+        $log = '';
 
         $recallForm = $this->createForm(RecallType::class,$recall);
         $recallForm->handleRequest($request);
-        $boxes = $boxRepository->getBoxes();
+        $boxes = $boxRepository->findAll();
+        $recalls = $recallRepository->findAll();
 
         if($form->get('new')->isClicked())
         {
             //$entityManager->persist($box);
             //$entityManager->flush();
-            return $this->renderForm('remember/index.html.twig',['form' => $form ,'recallForm' => $recallForm, 'log' => 'no new boxes for now']);
+            return $this->renderForm('remember/index.html.twig',['form' => $form ,'recallForm' => $recallForm, 'recalls' => $recalls, 'log' => 'no new boxes for now']);
         }
         //Need to 
         if($recallForm->get('recall')->isClicked())
@@ -44,11 +46,11 @@ class RememberController extends AbstractController
             $box = $boxRepository->findOneBy(['name' => $boxName]);
             $recall->setName('new recall');
             $recall->setTargetBox($box);
-            //$entityManager->persist($recall);
-            //$entityManager->flush();
-            return $this->renderForm('remember/index.html.twig',['form' => $form ,'recallForm' => $recallForm,'boxes' => $boxes, 'log' => 'you did great']);
+            $entityManager->persist($recall);
+            $entityManager->flush();
+            $log = 'new recall added in '.$boxName;
         }
 
-        return $this->renderForm('remember/index.html.twig',['form' => $form,'recallForm' => $recallForm,'boxes' => $boxes]);
+        return $this->renderForm('remember/index.html.twig',['form' => $form,'recallForm' => $recallForm,'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
     }
 }
