@@ -19,6 +19,20 @@ class Recall
     #[ORM\ManyToOne(targetEntity: Box::class, inversedBy: 'list')]
     private $target_box;
 
+    private $boxName;
+
+    public function getBoxName(): ?string
+    {
+        return $this->boxName;
+    }
+
+    public function setBoxName(string $boxName): self
+    {
+        $this->boxName = $boxName;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
