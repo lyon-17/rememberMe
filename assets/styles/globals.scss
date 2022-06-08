@@ -22,9 +22,13 @@ body
     }
 }
 
+#boxes{
+    display: flex;
+}
 .recalls{
     & > p{
         color:rgb(65, 173, 236);
+        border: 1px solid red;
     }
 }
 #recallsMenu{

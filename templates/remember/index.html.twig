@@ -8,8 +8,10 @@
     <div id="appContent">
         <div id="recallsMenu">
             {{ form(form) }}
+            {{ form(recallForm) }} 
         </div>
         {% if boxes is defined %}
+        <div id="boxes">
             {% for box in boxes %}
                 <div class="box">
                     <h2>{{box.name}}</h2>
