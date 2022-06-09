@@ -11,10 +11,13 @@ body
     min-height: 20em;
 
     margin-right: 5px;
-    & > h3{
+    &Title{
+        display: inline-block;
+        font-size: large;
         color:rgb(236, 216, 216);
     }
 }
+
 #base{
     & > p{
         color:aqua;
