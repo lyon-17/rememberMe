@@ -30,16 +30,12 @@ class RememberController extends AbstractController
 
         $recallForm = $this->createForm(RecallType::class,$recall);
         $recallForm->handleRequest($request);
-        $boxes = $boxRepository->findAll();
-        $recalls = $recallRepository->findAll();
-
+        
         if($form->get('new')->isClicked())
         {
             //$entityManager->persist($box);
             //$entityManager->flush();
-            return $this->renderForm('remember/index.html.twig',['form' => $form ,'recallForm' => $recallForm, 'recalls' => $recalls, 'log' => 'no new boxes for now']);
         }
-        //Need to 
         if($recallForm->get('recall')->isClicked())
         {
             $boxName = $recallForm->get('boxName')->getData();
@@ -50,6 +46,8 @@ class RememberController extends AbstractController
             $entityManager->flush();
             $log = 'new recall added in '.$boxName;
         }
+        $boxes = $boxRepository->findAll();
+        $recalls = $recallRepository->findAll();
 
         return $this->renderForm('remember/index.html.twig',['form' => $form,'recallForm' => $recallForm,'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
     }
