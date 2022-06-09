@@ -19,23 +19,27 @@ class RememberController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function showIndex(ManagerRegistry $doctrine, Request $request, BoxRepository $boxRepository, RecallRepository $recallRepository): Response
+    public function showIndex(ManagerRegistry $doctrine, Request $boxRequest, Request $recallRequest, BoxRepository $boxRepository, RecallRepository $recallRepository): Response
     {
         $box = new Box();
         $recall = new Recall();
         $box->setName('new box');
         $entityManager = $doctrine->getManager();
         $form = $this->createForm(Boxtype::class,$box);
+        $form->handleRequest($boxRequest);
         $log = '';
 
-        $recallForm = $this->createForm(RecallType::class,$recall);
-        $recallForm->handleRequest($request);
         
         if($form->get('new')->isClicked())
         {
-            //$entityManager->persist($box);
-            //$entityManager->flush();
+            $entityManager->persist($box);
+            $entityManager->flush();
+            
         }
+        
+        $recallForm = $this->createForm(RecallType::class,$recall);
+        $recallForm->handleRequest($recallRequest);
+
         if($recallForm->get('recall')->isClicked())
         {
             $boxName = $recallForm->get('boxName')->getData();
@@ -45,22 +49,12 @@ class RememberController extends AbstractController
             $entityManager->persist($recall);
             $entityManager->flush();
             $log = 'new recall added in '.$boxName;
+            //Editable the boxes and recall text. Also delete ()
         }
         $boxes = $boxRepository->findAll();
         $recalls = $recallRepository->findAll();
 
         return $this->renderForm('remember/index.html.twig',['form' => $form,'recallForm' => $recallForm,'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
     }
-    /**
-     * @Route("/del/{id}", name="delete")
-     */
-    public function deleteRecall(ManagerRegistry $doctrine, int $id): Response
-    {
-        $entityManager = $doctrine->getManager();
-        $deleteRecall = $entityManager->getRepository(Recall::class)->find($id);
-        $entityManager->remove($deleteRecall);
-        $entityManager->flush();
-        return $this->redirectToRoute('index');
 
-    }
 }
