@@ -11,19 +11,22 @@
             {{ form(recallForm) }} 
         </div>
         {% if boxes is defined %}
-        <div id="boxes">
-            {% for box in boxes %}
-                <div class="box">
-                    <h2>{{box.name}}</h2>
-                    <div class="recalls">
-                        {% for recall in recalls %}
-                                {% if box == recall.targetBox %}
-                                    <p>{{recall.name}}</p>
-                                {% endif %}
-                        {% endfor %}
+        <div id="boxes" class="container">
+            <div class="row">
+                {% for box in boxes %}
+                    <div class="box col">
+                        <h3>{{box.name}}</h3>
+                        <div class="recalls">
+                            {% for recall in recalls %}
+                                    {% if box == recall.targetBox %}
+                                        <p>{{recall.name}}</p>
+                                        <a href="/del/{{recall.id}}">Delete recall</a>
+                                    {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
         {% else %}
         <p>No boxes added</p>

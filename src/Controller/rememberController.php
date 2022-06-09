@@ -51,4 +51,16 @@ class RememberController extends AbstractController
 
         return $this->renderForm('remember/index.html.twig',['form' => $form,'recallForm' => $recallForm,'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
     }
+    /**
+     * @Route("/del/{id}", name="delete")
+     */
+    public function deleteRecall(ManagerRegistry $doctrine, int $id): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $deleteRecall = $entityManager->getRepository(Recall::class)->find($id);
+        $entityManager->remove($deleteRecall);
+        $entityManager->flush();
+        return $this->redirectToRoute('index');
+
+    }
 }
