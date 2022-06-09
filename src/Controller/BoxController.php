@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Box;
+use App\Form\Type\EditType;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,5 +24,27 @@ class BoxController extends AbstractController
             $entityManager->remove($deleteBox);
             $entityManager->flush();
             return $this->redirectToRoute('index');
+        }
+    /**
+    * @Route("/updBox/{id}", name="update_box")
+    */
+        public function updateBox(ManagerRegistry $doctrine, int $id, Request $editRequest): Response
+        {
+            $entityManager = $doctrine->getManager();
+            $editedBox = $entityManager->getRepository(Box::class)->find($id);
+            $editForm = $this->createForm(EditType::class,$editedBox);
+            $editForm->handleRequest($editRequest);
+
+            if($editForm->get('save')->isClicked())
+            {
+                $entityManager->flush();
+                return $this->redirectToRoute('index');
+            }
+            if($editForm->get('exit')->isClicked())
+            {
+                return $this->redirectToRoute('index');
+            }
+
+            return $this->renderForm('remember/edit.html.twig',['editForm' => $editForm, 'box' => $editedBox]);
         }
 }
