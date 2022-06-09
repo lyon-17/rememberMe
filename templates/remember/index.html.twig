@@ -19,8 +19,9 @@
                         <div class="recalls">
                             {% for recall in recalls %}
                                     {% if box == recall.targetBox %}
-                                        <p>{{recall.name}}</p>
-                                        <a href="/del/{{recall.id}}">Delete recall</a>
+                                        <p>{{recall.name}}
+                                        <a href="/del/{{recall.id}}"><i class="bi bi-battery-charging" style="font-size: 2rem; color: cornflowerblue;"></i></a>
+                                        </p>
                                     {% endif %}
                             {% endfor %}
                         </div>
