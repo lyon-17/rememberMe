@@ -3,16 +3,14 @@ body
 {
     background-color: rgb(236, 216, 216);
 }
-#appContent{
-    display: inline-block;
-}
+
 .box{
     border: 1px solid rgb(226, 83, 83);
-    min-width: 20em;
-    min-height: 30em;
-    display: inline-block;
+    min-width: 10em;
+    min-height: 20em;
+
     margin-right: 5px;
-    & > h2{
+    & > h3{
         color:rgb(236, 216, 216);
     }
 }
@@ -22,9 +20,6 @@ body
     }
 }
 
-#boxes{
-    display: flex;
-}
 .recalls{
     & > p{
         color:rgb(65, 173, 236);
@@ -32,7 +27,8 @@ body
     }
 }
 #recallsMenu{
+    border: 2px solid purple;
+    display: inline-block;
     margin: 1.5em;
     min-width: 150px;
-    border: 2px solid purple;
 }
