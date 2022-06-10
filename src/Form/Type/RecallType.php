@@ -2,33 +2,25 @@
 
 namespace App\Form\Type;
 
-use App\Repository\BoxRepository;
+use App\Entity\Recall;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 class RecallType extends AbstractType
 {
-    private $boxRepository;
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder->add('name');
+    }
 
-    function __construct(BoxRepository $boxRepository)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $this->boxRepository = $boxRepository;
+        $resolver->setDefaults([
+            'data_class' => Recall::class,
+        ]);
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $boxNames = $this->boxRepository->getBoxesName();
-        
-        $builder
-            ->add('boxName', ChoiceType::class, [
-            'label' => 'picker',
-            'choices' => $boxNames,
-            'choice_label' => function ($choice, $key, $value) {
-                return $value;
-            }])
-            ->add('recall', SubmitType::class,["label" => 'add recall']);
-    }
+
 }

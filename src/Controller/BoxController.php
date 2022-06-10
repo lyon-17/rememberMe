@@ -37,15 +37,22 @@ class BoxController extends AbstractController
             $editForm->handleRequest($editRequest);
 
             if($editForm->get('save')->isClicked())
-            {
-                $entityManager->flush();
-                return $this->redirectToRoute('index');
-            }
-            if($editForm->get('exit')->isClicked())
-            {
-                return $this->redirectToRoute('index');
-            }
+    public function updateBox(ManagerRegistry $doctrine, int $id, Request $editRequest): Response
+        $entityManager = $doctrine->getManager();
+        $editedBox = $entityManager->getRepository(Box::class)->find($id);
+        $editForm = $this->createForm(EditType::class,$editedBox);
+        $editForm->handleRequest($editRequest);
 
-            return $this->renderForm('remember/edit.html.twig',['editForm' => $editForm, 'box' => $editedBox]);
+        if($editForm->get('save')->isClicked())
+        {
+            $entityManager->flush();
+            return $this->redirectToRoute('index');
         }
+        if($editForm->get('exit')->isClicked())
+        {
+            return $this->redirectToRoute('index');
+        }
+
+        return $this->renderForm('remember/edit.html.twig',['editForm' => $editForm, 'box' => $editedBox]);
+    }
 }

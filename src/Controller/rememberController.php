@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Box;
 use App\Entity\Recall;
-use App\Form\Type\BoxType;
-use App\Form\Type\RecallType;
+use App\Form\Type\CreateType;
+use App\Form\Type\EditType;
 use App\Repository\BoxRepository;
 use App\Repository\RecallRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,13 +19,13 @@ class RememberController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function showIndex(ManagerRegistry $doctrine, Request $boxRequest, Request $recallRequest, Request $editRequest, BoxRepository $boxRepository, RecallRepository $recallRepository): Response
+    public function showIndex(ManagerRegistry $doctrine, Request $boxRequest, Request $editRequest, BoxRepository $boxRepository, RecallRepository $recallRepository): Response
     {
         $box = new Box();
         $recall = new Recall();
         $box->setName('new box');
         $entityManager = $doctrine->getManager();
-        $form = $this->createForm(Boxtype::class,$box);
+        $form = $this->createForm(CreateType::class,$box);
         $form->handleRequest($boxRequest);
         $log = '';
         
@@ -36,24 +36,20 @@ class RememberController extends AbstractController
             
         }
 
-        $recallForm = $this->createForm(RecallType::class,$recall);
-        $recallForm->handleRequest($recallRequest);
-
-        if($recallForm->get('recall')->isClicked())
+        if($form->get('recall')->isClicked())
         {
-            $boxName = $recallForm->get('boxName')->getData();
+            $boxName = $form->get('boxName')->getData();
             $box = $boxRepository->findOneBy(['name' => $boxName]);
             $recall->setName('new recall');
             $recall->setTargetBox($box);
             $entityManager->persist($recall);
             $entityManager->flush();
             $log = 'new recall added in '.$boxName;
-            //Editable the boxes and recall text. Also delete ()
+            //Editable the boxes and recall text in the same page if able. Also modify choice picker to allow the same name somehow
         }
 
         $editForm = $this->createForm(EditType::class,$box);
         $editForm->handleRequest($editRequest);
-        
 
         if($editForm->get('save')->isClicked())
         {
@@ -64,7 +60,7 @@ class RememberController extends AbstractController
         $boxes = $boxRepository->findAll();
         $recalls = $recallRepository->findAll();
 
-        return $this->renderForm('remember/index.html.twig',['form' => $form,'recallForm' => $recallForm,'editForm' => $editForm, 'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
+        return $this->renderForm('remember/index.html.twig',['form' => $form,'editForm' => $editForm, 'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
     }
 
 }

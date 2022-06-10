@@ -8,19 +8,15 @@
     <div id="appContent">
         <div id="recallsMenu">
             {{ form(form) }}
-            {{ form(recallForm) }}
         </div>
         {% if boxes is defined %}
         <div id="boxes" class="container">
             <div class="row">
                 {% for box in boxes %}
                     <div class="box col">
-                        <div data-controller="box">
-                            <p data-box-target="name" class="boxTitle">{{box.name}}</p>
+                            <p class="boxTitle">{{box.name}}</p>
                             <a href="/delBox/{{box.id}}"><i class="bi bi-dash-circle-fill" style="font-size: 2rem; color: cornflowerblue;"></i></a>
-                            <a data-action="click->box#edit">change name</a>
                             <a href="/updBox/{{box.id}}"><i class="bi bi-file-check" style="font-size: 2rem; color: cornflowerblue;"></i></a>
-                        </div>
                         <div class="recalls">
                             {% for recall in recalls %}
                                     {% if box == recall.targetBox %}

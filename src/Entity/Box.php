@@ -21,9 +21,24 @@ class Box
     #[ORM\OneToMany(mappedBy: 'target_box', targetEntity: Recall::class)]
     private $list;
 
+    private $boxName;
+
+    
     public function __construct()
     {
         $this->list = new ArrayCollection();
+    }
+    
+    public function getBoxName(): ?string
+    {
+        return $this->boxName;
+    }
+
+    public function setBoxName(string $boxName): self
+    {
+        $this->boxName = $boxName;
+
+        return $this;
     }
 
     public function getId(): ?int

@@ -30,7 +30,7 @@ class EditType extends AbstractType
         $builder
             ->add('name', TextType::class, ["label" => 'box name'])
             ->add('list', CollectionType::class, [
-                'entry_type' => RecType::class,
+                'entry_type' => RecallType::class,
                 'entry_options' => ['label' => false],
             ])
             ->add('save', SubmitType::class, ["label" => 'modify'])
