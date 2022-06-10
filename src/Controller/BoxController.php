@@ -22,6 +22,10 @@ class BoxController extends AbstractController
         {
             $entityManager = $doctrine->getManager();
             $deleteBox = $entityManager->getRepository(Box::class)->find($id);
+            $deleteRecalls = $entityManager->getRepository(Recall::class)->findBy(['target_box' => $id]);
+            foreach ($deleteRecalls as $key => $value) {
+                $entityManager->remove($value);
+            }
             $entityManager->remove($deleteBox);
             $entityManager->flush();
             return $this->redirectToRoute('index');
@@ -29,15 +33,8 @@ class BoxController extends AbstractController
     /**
     * @Route("/updBox/{id}", name="update_box")
     */
-        public function updateBox(ManagerRegistry $doctrine, int $id, Request $editRequest): Response
-        {
-            $entityManager = $doctrine->getManager();
-            $editedBox = $entityManager->getRepository(Box::class)->find($id);
-            $editForm = $this->createForm(EditType::class,$editedBox);
-            $editForm->handleRequest($editRequest);
-
-            if($editForm->get('save')->isClicked())
     public function updateBox(ManagerRegistry $doctrine, int $id, Request $editRequest): Response
+    {
         $entityManager = $doctrine->getManager();
         $editedBox = $entityManager->getRepository(Box::class)->find($id);
         $editForm = $this->createForm(EditType::class,$editedBox);
