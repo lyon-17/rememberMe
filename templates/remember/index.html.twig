@@ -6,8 +6,26 @@
     <p>{{log}}</p>
     {% endif %}
     <div id="appContent">
-        <div id="recallsMenu">
-            {{ form(form) }}
+        <div id="recallsMenu" class="container">
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-3">
+                {{form_row(form.name)}}
+                </div>
+                <div class="col-3">
+                {{form_row(form.new)}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    {{form_row(form.boxName)}}
+                </div>
+                <div class="col-3">
+                    {{form_row(form.recall)}}
+                </div>
+            </div>
+            {{form_rest(form)}}
+            {{form_end(form)}}
         </div>
         {% if boxes is defined %}
         <div id="boxes" class="container">
