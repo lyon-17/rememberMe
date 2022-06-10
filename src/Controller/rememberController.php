@@ -19,7 +19,7 @@ class RememberController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function showIndex(ManagerRegistry $doctrine, Request $boxRequest, Request $recallRequest, BoxRepository $boxRepository, RecallRepository $recallRepository): Response
+    public function showIndex(ManagerRegistry $doctrine, Request $boxRequest, Request $recallRequest, Request $editRequest, BoxRepository $boxRepository, RecallRepository $recallRepository): Response
     {
         $box = new Box();
         $recall = new Recall();
@@ -28,7 +28,6 @@ class RememberController extends AbstractController
         $form = $this->createForm(Boxtype::class,$box);
         $form->handleRequest($boxRequest);
         $log = '';
-
         
         if($form->get('new')->isClicked())
         {
@@ -36,7 +35,7 @@ class RememberController extends AbstractController
             $entityManager->flush();
             
         }
-        
+
         $recallForm = $this->createForm(RecallType::class,$recall);
         $recallForm->handleRequest($recallRequest);
 
@@ -51,10 +50,21 @@ class RememberController extends AbstractController
             $log = 'new recall added in '.$boxName;
             //Editable the boxes and recall text. Also delete ()
         }
+
+        $editForm = $this->createForm(EditType::class,$box);
+        $editForm->handleRequest($editRequest);
+        
+
+        if($editForm->get('save')->isClicked())
+        {
+            $entityManager->persist($box);
+            $entityManager->flush();
+        }
+        
         $boxes = $boxRepository->findAll();
         $recalls = $recallRepository->findAll();
 
-        return $this->renderForm('remember/index.html.twig',['form' => $form,'recallForm' => $recallForm,'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
+        return $this->renderForm('remember/index.html.twig',['form' => $form,'recallForm' => $recallForm,'editForm' => $editForm, 'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
     }
 
 }
