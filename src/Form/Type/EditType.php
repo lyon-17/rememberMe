@@ -35,7 +35,7 @@ class EditType extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
             ])
-            ->add('save', SubmitType::class, ["label" => 'modify'])
+            ->add('save', SubmitType::class, ["label" => 'update'])
             ->add('exit', SubmitType::class, ["label" => 'exit']);
     }
 }
