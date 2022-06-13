@@ -18,7 +18,7 @@ class Box
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\OneToMany(mappedBy: 'target_box', targetEntity: Recall::class)]
+    #[ORM\OneToMany(mappedBy: 'target_box', targetEntity: Recall::class, cascade:["persist"])]
     private $list;
 
     private $boxName;
@@ -28,7 +28,6 @@ class Box
     {
         $this->list = new ArrayCollection();
     }
-    
     public function getBoxName(): ?string
     {
         return $this->boxName;

@@ -32,6 +32,8 @@ class EditType extends AbstractType
             ->add('list', CollectionType::class, [
                 'entry_type' => RecallType::class,
                 'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'by_reference' => false,
             ])
             ->add('save', SubmitType::class, ["label" => 'modify'])
             ->add('exit', SubmitType::class, ["label" => 'exit']);

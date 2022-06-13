@@ -6,8 +6,10 @@ use App\Entity\Box;
 use App\Entity\Recall;
 use App\Form\Type\CreateType;
 use App\Form\Type\EditType;
+use App\Form\Type\BoxType;
 use App\Repository\BoxRepository;
 use App\Repository\RecallRepository;
+
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +25,11 @@ class RememberController extends AbstractController
     {
         $box = new Box();
         $recall = new Recall();
-        $box->setName('new box');
+        $box->setBoxName('new box');
         $entityManager = $doctrine->getManager();
         $form = $this->createForm(CreateType::class,$box);
         $form->handleRequest($boxRequest);
+        $boxForm = $this->createForm(BoxType::class,$box);
         $log = '';
         
         if($form->get('new')->isClicked())
@@ -60,7 +63,7 @@ class RememberController extends AbstractController
         $boxes = $boxRepository->findAll();
         $recalls = $recallRepository->findAll();
 
-        return $this->renderForm('remember/index.html.twig',['form' => $form,'editForm' => $editForm, 'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
+        return $this->renderForm('remember/index.html.twig',['form' => $form,'editForm' => $editForm, 'boxForm' => $boxForm, 'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
     }
 
 }
