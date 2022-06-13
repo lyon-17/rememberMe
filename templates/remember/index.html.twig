@@ -31,6 +31,9 @@
         <div id="boxes" class="container">
             <div class="row">
                 {% for box in boxes %}
+                    {% if editBox is defined and editBox == box %}
+                    {{ include('remember/edit.html.twig') }}
+                    {% else %}
                     <div class="box col">
                             <p class="boxTitle">{{box.name}}</p>
                             <a href="/delBox/{{box.id}}"><i class="bi bi-dash-circle-fill" style="font-size: 2rem; color: cornflowerblue;"></i></a>
@@ -45,6 +48,7 @@
                             {% endfor %}
                         </div>
                     </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

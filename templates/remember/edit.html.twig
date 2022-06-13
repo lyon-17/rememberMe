@@ -1,13 +1,4 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-    <div id="base">
-    <p>log:</p>
-    {% if log is defined %}
-    <p>{{log}}</p>
-    {% endif %}
-
-    <div class="container" 
+    <div id="editBox" class="box col" 
         data-controller="box"
         >
         {{ form_start(editForm) }}
@@ -21,4 +12,3 @@
         <button type="button" data-action="click->box#addRecall"  data-collection-holder-class="recalls">Add a recall</button>
         {{ form_rest(editForm) }}
     </div>
-    {% endblock %}

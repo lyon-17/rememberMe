@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Box;
 use App\Entity\Recall;
 use App\Form\Type\EditType;
-
+use App\Form\Type\CreateType;
+use App\Repository\BoxRepository;
+use App\Repository\RecallRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,8 +35,19 @@ class BoxController extends AbstractController
     /**
     * @Route("/updBox/{id}", name="update_box")
     */
-    public function updateBox(ManagerRegistry $doctrine, int $id, Request $editRequest): Response
+    public function updateBox(ManagerRegistry $doctrine, int $id, Request $boxRequest, Request $editRequest, BoxRepository $boxRepository, RecallRepository $recallRepository): Response
     {
+        $box = new Box();
+        $recall = new Recall();
+        $box->setBoxName('new box');
+        $entityManager = $doctrine->getManager();
+        $form = $this->createForm(CreateType::class,$box);
+        $form->handleRequest($boxRequest);
+        $log = '';
+
+        $boxes = $boxRepository->findAll();
+        $recalls = $recallRepository->findAll();
+
         $entityManager = $doctrine->getManager();
         $editedBox = $entityManager->getRepository(Box::class)->find($id);
         $editForm = $this->createForm(EditType::class,$editedBox);
@@ -50,6 +63,8 @@ class BoxController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
-        return $this->renderForm('remember/edit.html.twig',['editForm' => $editForm, 'box' => $editedBox]);
+        return $this->renderForm('remember/index.html.twig',['form' => $form,'editForm' => $editForm, 'editBox' => $editedBox, 'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
+
+        //return $this->renderForm('remember/edit.html.twig',['editForm' => $editForm, 'box' => $editedBox]);
     }
 }
