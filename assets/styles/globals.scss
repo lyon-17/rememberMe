@@ -1,58 +1,71 @@
 @import "~bootstrap/scss/bootstrap";
 @import "~bootstrap-icons/font/bootstrap-icons";
+$font-color : rgb(53, 243, 211);
+$recall-color: rgb(241, 64, 64);
+$small-margin: 5px;
+
 body
 {
     background-color: rgb(44, 41, 41);
-    color:rgb(53, 243, 211);
+    color: $font-color;
 }
 
 .box{
-    border: 1px solid rgb(226, 83, 83);
+    border: 5px solid rgb(226, 83, 83);
+    border-radius: 5px;
+    border-bottom-style: dashed;
     min-width: 10em;
     min-height: 20em;
+    padding-bottom: 10px;
 
-    margin-right: 5px;
+    margin-right: $small-margin;
     &Title{
         display: inline-block;
         font-size: large;
         color:rgb(236, 216, 216);
     }
     & > a{
-        color:rgb(53, 243, 211);
+        color:$font-color;
         cursor: pointer;
     }
 }
 
 #base{
     & > p{
-        color:aqua;
+        color:$font-color;
     }
 }
 
-#boxEdit{
-    margin-top: 5px;
-}
-
-#buttonEdit{
-    & div{
-        margin: 5px;
+#edit_{
+    &list{
+        & div{
+            margin: $small-margin;
+        }
+    }
+    &box{
+        margin-top: $small-margin;
+    }
+    &buttons{
+        & div{
+            margin: $small-margin;
+        }
     }
 }
 
-#edit_list{
-    & div{
-        margin: 5px;
-    }
+.new_recall{
+    margin: 0px !important;
 }
 
 .recalls{
+    border: 3px solid $recall-color;
+    border-radius: 10px 10px 5px 5px;
     & > p{
-        border: 1px solid red;
         color:rgb(65, 173, 236);
+        margin: $small-margin;
+        border-bottom: 2px solid $recall-color;
     }
 }
 #recallsMenu{
-    border: 2px solid purple;
     display: inline-block;
     margin: 1.5em;
     min-width: 150px;

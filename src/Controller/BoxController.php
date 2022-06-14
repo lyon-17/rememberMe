@@ -37,12 +37,7 @@ class BoxController extends AbstractController
     */
     public function updateBox(ManagerRegistry $doctrine, int $id, Request $boxRequest, Request $editRequest, BoxRepository $boxRepository, RecallRepository $recallRepository): Response
     {
-        $box = new Box();
-        $recall = new Recall();
-        $box->setBoxName('new box');
         $entityManager = $doctrine->getManager();
-        $form = $this->createForm(CreateType::class,$box);
-        $form->handleRequest($boxRequest);
         $log = '';
 
         $boxes = $boxRepository->findAll();
@@ -58,12 +53,13 @@ class BoxController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('index');
         }
+
         if($editForm->get('exit')->isClicked())
         {
             return $this->redirectToRoute('index');
         }
-
-        return $this->renderForm('remember/index.html.twig',['form' => $form,'editForm' => $editForm, 'editBox' => $editedBox, 'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
+        
+        return $this->renderForm('remember/index.html.twig',['editForm' => $editForm, 'editBox' => $editedBox, 'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
 
         //return $this->renderForm('remember/edit.html.twig',['editForm' => $editForm, 'box' => $editedBox]);
     }

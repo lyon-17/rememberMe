@@ -7,9 +7,10 @@ export default class extends Controller {
   {
     const collectionHolder = this.listTarget;
     
-    const item = document.createElement('div');
+    var item = document.createElement("div");
+    //__name__ is the placeholder when data-controller happens, replaced by the collection name+index
     item.innerHTML = collectionHolder.dataset.prototype.replace(/__name__/g,collectionHolder.dataset.index);
-
+    item.setAttribute('class','new_recall');
     collectionHolder.append(item);
     
     collectionHolder.dataset.index++;

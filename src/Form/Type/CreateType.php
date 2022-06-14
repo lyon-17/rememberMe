@@ -5,7 +5,6 @@ namespace App\Form\Type;
 use App\Repository\BoxRepository;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,9 +25,9 @@ class CreateType extends AbstractType
 
         $builder
             ->add('name', TextType::class)
-            ->add('new', SubmitType::class, ["label" => 'add new box'])
+            ->add('new', SubmitType::class, ["label" => 'create new box'])
             ->add('boxName', ChoiceType::class, [
-            'label' => 'picker',
+            'label' => 'Select box',
             'choices' => $boxNames,
             'choice_label' => function ($choice, $key, $value) {
                 return $value;
@@ -37,5 +36,4 @@ class CreateType extends AbstractType
             ->add('recall', SubmitType::class,["label" => 'add recall']);
     }
 
-    
 }
