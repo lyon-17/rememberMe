@@ -29,6 +29,22 @@ body
     }
 }
 
+#boxEdit{
+    margin-top: 5px;
+}
+
+#buttonEdit{
+    & div{
+        margin: 5px;
+    }
+}
+
+#edit_list{
+    & div{
+        margin: 5px;
+    }
+}
+
 .recalls{
     & > p{
         border: 1px solid red;

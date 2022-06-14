@@ -28,14 +28,15 @@ class EditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, ["label" => 'box name'])
+            ->add('name', TextType::class, ["label" => 'Box name', 'attr' => ['class' => 'form-control']])
             ->add('list', CollectionType::class, [
+                'label' => 'Recalls',
                 'entry_type' => RecallType::class,
-                'entry_options' => ['label' => false],
+                'entry_options' => ['label' => false, 'attr' => ['class' => 'form-group']],
                 'allow_add' => true,
                 'by_reference' => false,
             ])
-            ->add('save', SubmitType::class, ["label" => 'update'])
-            ->add('exit', SubmitType::class, ["label" => 'exit']);
+            ->add('save', SubmitType::class, ["label" => 'update', 'attr' => ['class' => 'btn btn-secondary']])
+            ->add('exit', SubmitType::class, ["label" => 'exit', 'attr' => ['class' => 'btn btn-secondary']]);
     }
 }
