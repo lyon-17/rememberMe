@@ -18,8 +18,12 @@ class Recall
 
     #[ORM\ManyToOne(targetEntity: Box::class, inversedBy: 'list')]
     private $target_box;
+    
+    #[ORM\Column(type: 'string', length: 255, nullable: true, options:["default" => "progress"])]
+    private $status;
 
     private $boxName;
+
 
     public function getBoxName(): ?string
     {
@@ -58,6 +62,18 @@ class Recall
     public function setTargetBox(?Box $target_box): self
     {
         $this->target_box = $target_box;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
