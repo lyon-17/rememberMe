@@ -32,6 +32,7 @@ class FormManager
         $recall = new Recall();
         $box = $this->boxRepository->findOneBy(['name' => $name]);
         $recall->setName('new recall');
+        $recall->setStatus('progress');
         $recall->setTargetBox($box);
         $entityManager = $this->doctrine->getManager();
         $entityManager->persist($recall);

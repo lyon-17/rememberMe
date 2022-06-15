@@ -8,7 +8,7 @@ use App\Form\Type\CreateType;
 use App\Form\Type\EditType;
 use App\Repository\BoxRepository;
 use App\Repository\RecallRepository;
-
+use App\Service\FormManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,10 +20,9 @@ class RememberController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function showIndex(ManagerRegistry $doctrine, Request $boxRequest, BoxRepository $boxRepository, RecallRepository $recallRepository): Response
+    public function showIndex(ManagerRegistry $doctrine, Request $boxRequest, FormManager $formManager): Response
     {
         $box = new Box();
-        $recall = new Recall();
         $box->setName('New box');
         $entityManager = $doctrine->getManager();
         $form = $this->createForm(CreateType::class,$box);
@@ -40,19 +39,12 @@ class RememberController extends AbstractController
         if($form->get('recall')->isClicked())
         {
             $boxName = $form->get('boxName')->getData();
-            $box = $boxRepository->findOneBy(['name' => $boxName]);
-            $recall->setName('new recall');
-            $recall->setTargetBox($box);
-            $entityManager->persist($recall);
-            $entityManager->flush();
-            $log = 'new recall added in '.$boxName;
+            $log = $formManager->addRecall($boxName);
             //Editable the boxes and recall text in the same page if able. Also modify choice picker to allow the same name somehow
         }
+        $items = $formManager->getItems();
 
-        $boxes = $boxRepository->findAll();
-        $recalls = $recallRepository->findAll();
-
-        return $this->renderForm('remember/index.html.twig',['form' => $form, 'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
+        return $this->renderForm('remember/index.html.twig',['form' => $form, 'boxes' => $items['boxes'], 'recalls' => $items['recalls'], 'log' => $log]);
     }
 
 }
