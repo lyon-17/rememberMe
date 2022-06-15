@@ -53,7 +53,7 @@ body
 }
 
 .new_recall{
-    margin: 0px !important;
+    margin: 5px 15px 5px 15px;
 }
 
 .recalls{
@@ -71,5 +71,8 @@ body
     min-width: 150px;
     .row{
         padding: 5px;
+    }
+    label{
+        min-width: 90px;
     }
 }
