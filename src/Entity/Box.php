@@ -69,6 +69,7 @@ class Box
     {
         if (!$this->list->contains($list)) {
             $this->list[] = $list;
+            $list->setStatus('progress');
             $list->setTargetBox($this);
         }
 
