@@ -56,6 +56,11 @@ body
     margin: 5px 15px 5px 15px;
 }
 
+.rec_done
+    {
+        color:chartreuse;
+        display: none;
+    }
 .recalls{
     border: 3px solid $recall-color;
     border-radius: 10px 10px 5px 5px;

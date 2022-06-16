@@ -24,4 +24,28 @@ class RecallController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
+        /**
+         * @Route("/updRec/{id}/urgent", name="urgent_recall")
+         */
+        public function urgRecall(ManagerRegistry $doctrine, int $id): Response
+        {
+            $entityManager = $doctrine->getManager();
+            $urgentRecall = $entityManager->getRepository(Recall::class)->find($id);
+            $urgentRecall->setStatus('urgent');
+            $entityManager->flush();
+            return $this->redirectToRoute('index');
+        }
+
+        /**
+         * @Route("/updRec/{id}/done", name="urgent_recall")
+         */
+        public function doneRecall(ManagerRegistry $doctrine, int $id): Response
+        {
+            $entityManager = $doctrine->getManager();
+            $urgentRecall = $entityManager->getRepository(Recall::class)->find($id);
+            $urgentRecall->setStatus('done');
+            $entityManager->flush();
+            return $this->redirectToRoute('index');
+        }
+
 }
