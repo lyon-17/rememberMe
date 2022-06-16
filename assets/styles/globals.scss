@@ -61,6 +61,12 @@ body
         color:chartreuse;
         display: none;
     }
+
+.rec_done_show
+{
+    display: block;
+}
+
 .recalls{
     border: 3px solid $recall-color;
     border-radius: 10px 10px 5px 5px;

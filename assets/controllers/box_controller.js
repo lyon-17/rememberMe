@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-  static targets = [ "list" ];
+  static targets = [ "list","done" ];
 
   addRecall()
   {
@@ -14,5 +14,21 @@ export default class extends Controller {
     collectionHolder.append(item);
     
     collectionHolder.dataset.index++;
+  }
+  show() {
+    const element = this.doneTargets;
+    const log = document.getElementById('log');
+    if(element.length == 0)
+    {
+      log.innerHTML = 'No done recalls found';
+    }
+    else
+    {
+      log.innerHTML = "Displaying done recalls";
+      element.forEach(element => {
+        element.setAttribute('class','rec_done_show');
+      });
+    }
+
   }
 }

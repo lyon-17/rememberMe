@@ -3,7 +3,7 @@
     <div id="base">
     <p>log:</p>
     {% if log is defined %}
-    <p>{{log}}</p>
+    <p id="log">{{log}}</p>
     {% endif %}
     <div id="appContent">
         {% if form is defined %}
@@ -38,7 +38,9 @@
                     {% if editBox is defined and editBox == box %}
                     {{ include('remember/edit.html.twig') }}
                     {% else %}
-                    <div class="box col">
+                    <div 
+                        data-controller="box"
+                        class="box col">
                             <p class="boxTitle">{{box.name}}</p>
                             <a href="/delBox/{{box.id}}"><i class="bi bi-dash-circle-fill" style="font-size: 2rem; color: cornflowerblue;"></i></a>
                             <a href="/updBox/{{box.id}}"><i class="bi bi-gear-fill" style="font-size: 2rem; color: cornflowerblue;"></i></a>
@@ -48,6 +50,7 @@
                                         {% if recall.status == "urgent" %}
                                         <div class="rec_urgent">
                                         {% elseif  recall.status == "done" %}
+                                        <div data-box-target="done" class="rec_done">
                                         {% endif %}
                                         <p>{{recall.name}}
                                             <a href="/delRec/{{recall.id}}"><i class="bi bi-patch-minus-fill" style="font-size: 1.2rem; color: cornflowerblue;"></i></a>
@@ -59,6 +62,7 @@
                                         {% endif %}
                                     {% endif %}
                             {% endfor %}
+                        <button data-action="click->box#show" id="show_button">Show done recalls</button>
                         </div>
                     </div>
                     {% endif %}
