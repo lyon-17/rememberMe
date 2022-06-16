@@ -1,7 +1,7 @@
 @import "~bootstrap/scss/bootstrap";
 @import "~bootstrap-icons/font/bootstrap-icons";
 $font-color : rgb(53, 243, 211);
-$recall-color: rgb(241, 64, 64);
+$recall-color: rgb(1, 184, 184);
 $small-margin: 5px;
 
 body
@@ -56,6 +56,11 @@ body
     margin: 5px 15px 5px 15px;
 }
 
+.rec_urgent
+    {
+        color: crimson;
+        border-bottom: 2px solid rgba(243, 40, 40, 0.863);
+    }
 .rec_done
     {
         color:chartreuse;
