@@ -40,4 +40,13 @@ class FormManager
         return 'new recall added in '.$name;
     }
 
+    public function editRecallStatus(string $status, int $id) : void
+    {
+        $entityManager = $this->doctrine->getManager();
+        $urgentRecall = $entityManager->getRepository(Recall::class)->find($id);
+        $urgentRecall->setStatus($status);
+        $entityManager->flush();
+        return;
+    }
+
 }

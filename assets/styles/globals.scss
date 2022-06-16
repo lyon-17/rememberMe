@@ -56,27 +56,28 @@ body
     margin: 5px 15px 5px 15px;
 }
 
-.rec_urgent
+.rec_{
+    &urgent
     {
         color: crimson;
         border-bottom: 2px solid rgba(243, 40, 40, 0.863);
     }
-.rec_done
+    &done
     {
         color:chartreuse;
         display: none;
+        &_show
+        {
+            display: block;
+        }
     }
-
-.rec_done_show
-{
-    display: block;
 }
 
 .recalls{
     border: 3px solid $recall-color;
     border-radius: 10px 10px 5px 5px;
     & > p{
-        color:rgb(65, 173, 236);
+        color:rgb(250, 252, 133);
         margin: $small-margin;
         border-bottom: 2px solid $recall-color;
     }

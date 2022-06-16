@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Recall;
-
+use App\Service\FormManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +12,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RecallController extends AbstractController
 {
+
+    private $formManager;
+
+    function __construct(FormManager $formManager)
+    {
+        $this->formManager = $formManager;
+    }
         /**
          * @Route("/delRec/{id}", name="delete")
          */
@@ -29,22 +36,25 @@ class RecallController extends AbstractController
          */
         public function urgRecall(ManagerRegistry $doctrine, int $id): Response
         {
-            $entityManager = $doctrine->getManager();
-            $urgentRecall = $entityManager->getRepository(Recall::class)->find($id);
-            $urgentRecall->setStatus('urgent');
-            $entityManager->flush();
+            $this->formManager->editRecallStatus('urgent',$id);
             return $this->redirectToRoute('index');
         }
 
         /**
-         * @Route("/updRec/{id}/done", name="urgent_recall")
+         * @Route("/updRec/{id}/done", name="done_recall")
          */
         public function doneRecall(ManagerRegistry $doctrine, int $id): Response
         {
-            $entityManager = $doctrine->getManager();
-            $urgentRecall = $entityManager->getRepository(Recall::class)->find($id);
-            $urgentRecall->setStatus('done');
-            $entityManager->flush();
+            $this->formManager->editRecallStatus('done',$id);
+            return $this->redirectToRoute('index');
+        }
+
+        /**
+         * @Route("/updRec/{id}/progress", name="progress_recall")
+         */
+        public function progressRecall(ManagerRegistry $doctrine, int $id): Response
+        {
+            $this->formManager->editRecallStatus('progress',$id);
             return $this->redirectToRoute('index');
         }
 
