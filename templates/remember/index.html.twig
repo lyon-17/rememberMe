@@ -46,8 +46,7 @@
                             {% for recall in recalls %}
                                     {% if box == recall.targetBox %}
                                         <p>{{recall.name}}
-                                        <a href="/delRec/{{recall.id}}"><i class="bi bi-patch-minus-fill" style="font-size: 1.2rem; color: cornflowerblue;"></i></a>
-                                        <a href="/edRec/{{recall.id}}/urg"<i class="bi bi-stopwatch-fill"style="font-size: 1.2rem; color: crimson;"></i></a>
+                                        <a href="/delRec/{{recall.id}}"><i class="bi bi-patch-minus-fill" style="font-size: 2rem; color: cornflowerblue;"></i></a>
                                         </p>
                                     {% endif %}
                             {% endfor %}
