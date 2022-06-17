@@ -24,6 +24,9 @@ class Recall
 
     private $boxName;
 
+    #[ORM\ManyToOne(targetEntity: Status::class, inversedBy: 'status_name')]
+    private $state;
+
 
     public function getBoxName(): ?string
     {
@@ -74,6 +77,18 @@ class Recall
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getState(): ?Status
+    {
+        return $this->state;
+    }
+
+    public function setState(?Status $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }

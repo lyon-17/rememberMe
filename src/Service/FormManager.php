@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Repository\BoxRepository;
 use App\Repository\RecallRepository;
 use App\Entity\Recall;
+use App\Entity\Status;
 use Doctrine\Persistence\ManagerRegistry;
 
 class FormManager
@@ -44,7 +45,9 @@ class FormManager
     {
         $entityManager = $this->doctrine->getManager();
         $urgentRecall = $entityManager->getRepository(Recall::class)->find($id);
-        $urgentRecall->setStatus($status);
+        $state = $entityManager->getRepository(Status::class)->findOneBy(['name' => $status]);
+        $urgentRecall->setStatus($state->getName());
+        $urgentRecall->setState($state);
         $entityManager->flush();
         return;
     }
