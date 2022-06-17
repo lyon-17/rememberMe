@@ -34,7 +34,7 @@ class RecallController extends AbstractController
         /**
          * @Route("/updRec/{id}/urgent", name="urgent_recall")
          */
-        public function urgRecall(ManagerRegistry $doctrine, int $id): Response
+        public function urgRecall(int $id): Response
         {
             $this->formManager->editRecallStatus('urgent',$id);
             return $this->redirectToRoute('index');
@@ -43,7 +43,7 @@ class RecallController extends AbstractController
         /**
          * @Route("/updRec/{id}/done", name="done_recall")
          */
-        public function doneRecall(ManagerRegistry $doctrine, int $id): Response
+        public function doneRecall(int $id): Response
         {
             $this->formManager->editRecallStatus('done',$id);
             return $this->redirectToRoute('index');
@@ -52,7 +52,7 @@ class RecallController extends AbstractController
         /**
          * @Route("/updRec/{id}/progress", name="progress_recall")
          */
-        public function progressRecall(ManagerRegistry $doctrine, int $id): Response
+        public function progressRecall(int $id): Response
         {
             $this->formManager->editRecallStatus('progress',$id);
             return $this->redirectToRoute('index');
