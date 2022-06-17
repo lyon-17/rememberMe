@@ -54,9 +54,15 @@
                                         {% endif %}
                                         <p>{{recall.name}}
                                             <a href="/delRec/{{recall.id}}"><i class="bi bi-patch-minus-fill" style="font-size: 1.2rem; color: cornflowerblue;"></i></a>
-                                            <a href="/updRec/{{recall.id}}/urgent"><i class="bi bi-stopwatch-fill" style="font-size: 1.2rem; color: crimson;"></i></a>
+                                            {% if recall.status == "progress" %}
+                                                <a href="/updRec/{{recall.id}}/urgent"><i class="bi bi-stopwatch-fill" style="font-size: 1.2rem; color: crimson;"></i></a>
+                                            {% endif %}
+                                            {% if recall.status == "urgent" %}
                                             <a href="/updRec/{{recall.id}}/progress"><i class="bi bi-app-indicator" style="font-size: 1.2rem; color: burlywood;"></i></a>
+                                            {% endif %}
+                                            {% if recall.status != "done" %}
                                             <a href="/updRec/{{recall.id}}/done"><i class="bi bi-send-check-fill" style="font-size: 1.2rem; color: darkseagreen;"></i></a>
+                                            {% endif %}
                                         </p>
                                         {% if recall.status == "urgent" or recall.status == "done" %}
                                             </div>
