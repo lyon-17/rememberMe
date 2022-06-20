@@ -24,7 +24,7 @@ class FormManager
     public function getItems()
     {
         $boxes = $this->boxRepository->findAll();
-        $recalls = $this->recallRepository->findBy([],['status' => 'DESC']);
+        $recalls = $this->recallRepository->getRecalls();
         return ['boxes' => $boxes, 'recalls' => $recalls];
     }
 

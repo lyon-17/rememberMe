@@ -38,6 +38,21 @@ class RecallRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    /**
+     * Order the recalls by the priority established
+     */
+    public function getRecalls()
+    {
+        $entityManager = $this->getEntityManager();
+        //Join automatically fetch all the related entities to the field
+        $query = $entityManager->createQuery(
+            'SELECT r
+            FROM App\Entity\Recall r
+            JOIN r.state status
+            ORDER BY status.priority ASC'
+        );
+        return $query->getResult();
+    }
 
 //    /**
 //     * @return Recall[] Returns an array of Recall objects
