@@ -8,6 +8,7 @@ use App\Form\Type\EditType;
 use App\Form\Type\CreateType;
 use App\Repository\BoxRepository;
 use App\Repository\RecallRepository;
+use App\Service\FormManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,12 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class BoxController extends AbstractController
 {
+    private FormManager $formManager;
+
+    function __construct(FormManager $formManager)
+    {
+        $this->formManager = $formManager;
+    }
     /**
     * @Route("/delBox/{id}", name="remove_box")
     */
@@ -35,13 +42,12 @@ class BoxController extends AbstractController
     /**
     * @Route("/updBox/{id}", name="update_box")
     */
-    public function updateBox(ManagerRegistry $doctrine, int $id, Request $boxRequest, Request $editRequest, BoxRepository $boxRepository, RecallRepository $recallRepository): Response
+    public function updateBox(ManagerRegistry $doctrine, int $id, Request $editRequest): Response
     {
         $entityManager = $doctrine->getManager();
         $log = '';
 
-        $boxes = $boxRepository->findAll();
-        $recalls = $recallRepository->findAll();
+        $items = $this->formManager->getItems();
 
         $entityManager = $doctrine->getManager();
         $editedBox = $entityManager->getRepository(Box::class)->find($id);
@@ -59,7 +65,7 @@ class BoxController extends AbstractController
             return $this->redirectToRoute('index');
         }
         
-        return $this->renderForm('remember/index.html.twig',['editForm' => $editForm, 'editBox' => $editedBox, 'boxes' => $boxes, 'recalls' => $recalls, 'log' => $log]);
+        return $this->renderForm('remember/index.html.twig',['editForm' => $editForm, 'editBox' => $editedBox, 'boxes' => $items['boxes'], 'recalls' => $items['recalls'], 'log' => $log]);
 
         //return $this->renderForm('remember/edit.html.twig',['editForm' => $editForm, 'box' => $editedBox]);
     }

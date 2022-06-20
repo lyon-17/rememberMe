@@ -8,7 +8,7 @@
     <div id="appContent">
         {% if form is defined %}
         <div id="recallsMenu" class="container">
-            <h4>Box menu</h4>
+            <h4>Box Options</h4>
             {{ form_start(form) }}
             <div class="row">
                 <div class="col-3">
@@ -27,7 +27,7 @@
                 </div>
             </div>
             {{form_rest(form)}}
-            {{form_end(form)}}
+            {{form_end(form)}}            
         </div>
         {% endif %}
         {% if boxes is defined %}

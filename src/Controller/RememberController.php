@@ -3,11 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Box;
-use App\Entity\Recall;
 use App\Form\Type\CreateType;
-use App\Form\Type\EditType;
-use App\Repository\BoxRepository;
-use App\Repository\RecallRepository;
 use App\Service\FormManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

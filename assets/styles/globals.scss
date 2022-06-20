@@ -2,11 +2,12 @@
 @import "~bootstrap-icons/font/bootstrap-icons";
 $font-color : rgb(53, 243, 211);
 $recall-color: rgb(1, 184, 184);
+$link-color: rgb(192, 204, 228);
+$back-color: rgb(44, 41, 41);
 $small-margin: 5px;
 
-body
-{
-    background-color: rgb(44, 41, 41);
+body{
+    background-color: $back-color;
     color: $font-color;
 }
 
@@ -33,6 +34,13 @@ body
 #base{
     & > p{
         color:$font-color;
+    }
+}
+
+#create_{
+    &new, &recall{
+        background-color: $back-color;
+        color: $link-color;
     }
 }
 
@@ -82,6 +90,7 @@ body
         border-bottom: 2px solid $recall-color;
     }
 }
+
 #recallsMenu{
     display: inline-block;
     margin: 1.5em;
@@ -92,4 +101,9 @@ body
     label{
         min-width: 90px;
     }
+}
+
+#statusLink{
+    color: $link-color;
+    text-decoration-line: none;
 }
