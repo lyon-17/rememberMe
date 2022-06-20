@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Box;
 use App\Form\Type\CreateType;
+use App\Repository\StatusRepository;
 use App\Service\FormManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,6 +42,15 @@ class RememberController extends AbstractController
         $items = $formManager->getItems();
 
         return $this->renderForm('remember/index.html.twig',['form' => $form, 'boxes' => $items['boxes'], 'recalls' => $items['recalls'], 'log' => $log]);
+    }
+
+    /**
+     * @Route("/status", name="status")
+     */
+    public function showStatus(StatusRepository $statusRepository): Response
+    {
+        $status = $statusRepository->findAll();
+        return $this->renderForm('remember/status.html.twig',['status' => $status]);
     }
 
 }
