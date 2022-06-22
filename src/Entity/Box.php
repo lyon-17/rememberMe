@@ -23,7 +23,7 @@ class Box
 
     private $boxName;
 
-    
+
     public function __construct()
     {
         $this->list = new ArrayCollection();
@@ -69,7 +69,6 @@ class Box
     {
         if (!$this->list->contains($list)) {
             $this->list[] = $list;
-            $list->setStatus('progress');
             $list->setTargetBox($this);
         }
 
@@ -87,4 +86,5 @@ class Box
 
         return $this;
     }
+    
 }

@@ -39,6 +39,14 @@ class StatusRepository extends ServiceEntityRepository
         }
     }
 
+    public function getMain(): Status
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.main = TRUE')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
 //    /**
 //     * @return Status[] Returns an array of Status objects
 //     */

@@ -24,6 +24,9 @@ class Status
     #[ORM\OneToMany(mappedBy: 'state', targetEntity: Recall::class)]
     private $status_name;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $main;
+
     public function __construct()
     {
         $this->status_name = new ArrayCollection();
@@ -84,6 +87,18 @@ class Status
                 $statusName->setState(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isMain(): ?bool
+    {
+        return $this->main;
+    }
+
+    public function setMain(?bool $main): self
+    {
+        $this->main = $main;
 
         return $this;
     }
