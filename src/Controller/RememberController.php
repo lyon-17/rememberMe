@@ -37,7 +37,7 @@ class RememberController extends AbstractController
         {
             $boxName = $form->get('boxName')->getData();
             $log = $formManager->addRecall($boxName);
-            //Editable the boxes and recall text in the same page if able. Also modify choice picker to allow the same name somehow
+            
         }
         $items = $formManager->getItems();
 
