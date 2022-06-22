@@ -19,14 +19,13 @@ class Recall
     #[ORM\ManyToOne(targetEntity: Box::class, inversedBy: 'list')]
     private $target_box;
     
-    #[ORM\Column(type: 'string', length: 255, nullable: true, options:["default" => "progress"])]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $status;
 
-    private $boxName;
-
-    #[ORM\ManyToOne(targetEntity: Status::class, inversedBy: 'status_name')]
+    #[ORM\ManyToOne(targetEntity: Status::class, inversedBy: 'status_name', cascade:["persist"] )]
     private $state;
-
+    
+    private $boxName;
 
     public function getBoxName(): ?string
     {
@@ -92,4 +91,5 @@ class Recall
 
         return $this;
     }
+    
 }
