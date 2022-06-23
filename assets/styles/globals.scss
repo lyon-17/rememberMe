@@ -122,6 +122,15 @@ body{
     }
 }
 
-.stateButton > div{
+.state{
+    &Button > div{
     margin-top: 20px;
+    }
+    &Name{
+        color: var(--bs-table-striped-color);
+        text-decoration: none;
+        &:hover{
+            color: $link-color;
+        }
+    }
 }

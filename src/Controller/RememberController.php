@@ -30,14 +30,12 @@ class RememberController extends AbstractController
         {
             $entityManager->persist($box);
             $entityManager->flush();
-            
         }
 
         if($form->get('recall')->isClicked())
         {
             $boxName = $form->get('boxName')->getData();
             $log = $formManager->addRecall($boxName);
-            
         }
         $items = $formManager->getItems();
 

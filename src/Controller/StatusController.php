@@ -37,6 +37,20 @@ class StatusController extends AbstractController
     }
 
     /**
+     * @Route("/status/setMain/{id}", name="add_state")
+     */
+    public function setStateMain(ManagerRegistry $doctrine, StatusRepository $statusRepository, int $id)
+    {
+        $entityManager = $doctrine->getManager();
+        $mainState = $statusRepository->find($id);
+        $removeState = $statusRepository->getMain();
+        $removeState->setMain(false);
+        $mainState->setMain(true);
+        $entityManager->flush();
+        return $this->redirectToRoute('status');
+    }
+
+    /**
      * @Route("/status/edState/{id}", name="editState")
      */
     public function editState(ManagerRegistry $doctrine, Request $request, StatusRepository $statusRepository, int $id)
