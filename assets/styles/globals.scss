@@ -104,6 +104,11 @@ body{
 }
 
 #statusLink{
+#show_button{
+    color: $link-color;
+    background-color: $back-color;
+    margin: $small-margin;
+}
     color: $link-color;
     text-decoration-line: none;
 }
