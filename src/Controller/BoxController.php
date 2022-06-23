@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Box;
-use App\Entity\Recall;
 use App\Form\Type\EditType;
 use App\Service\RememberManager;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,16 +23,9 @@ class BoxController extends AbstractController
     /**
     * @Route("/delBox/{id}", name="remove_box")
     */
-        public function deleteBox(ManagerRegistry $doctrine, int $id): Response
+        public function deleteBox(int $id): Response
         {
-            $entityManager = $doctrine->getManager();
-            $deleteBox = $entityManager->getRepository(Box::class)->find($id);
-            $deleteRecalls = $entityManager->getRepository(Recall::class)->findBy(['target_box' => $id]);
-            foreach ($deleteRecalls as $key => $value) {
-                $entityManager->remove($value);
-            }
-            $entityManager->remove($deleteBox);
-            $entityManager->flush();
+            $this->rememberManager->removeBox($id);
             return $this->redirectToRoute('index');
         }
     /**
@@ -41,6 +33,7 @@ class BoxController extends AbstractController
     */
     public function updateBox(ManagerRegistry $doctrine, int $id, Request $editRequest): Response
     {
+
         $entityManager = $doctrine->getManager();
         $log = '';
 

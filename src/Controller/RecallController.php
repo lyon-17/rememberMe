@@ -22,12 +22,9 @@ class RecallController extends AbstractController
         /**
          * @Route("/delRec/{id}", name="delete")
          */
-        public function deleteRecall(ManagerRegistry $doctrine, int $id): Response
+        public function deleteRecall(int $id): Response
         {
-            $entityManager = $doctrine->getManager();
-            $deleteRecall = $entityManager->getRepository(Recall::class)->find($id);
-            $entityManager->remove($deleteRecall);
-            $entityManager->flush();
+            $this->rememberManager->deleteRecall($id);
             return $this->redirectToRoute('index');
         }
 
