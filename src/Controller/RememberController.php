@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Box;
 use App\Form\Type\CreateType;
 use App\Repository\StatusRepository;
-use App\Service\FormManager;
+use App\Service\RememberManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +17,7 @@ class RememberController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function showIndex(ManagerRegistry $doctrine, Request $boxRequest, FormManager $formManager): Response
+    public function showIndex(ManagerRegistry $doctrine, Request $boxRequest, RememberManager $rememberManager): Response
     {
         $box = new Box();
         $box->setName('New box');
@@ -35,9 +35,9 @@ class RememberController extends AbstractController
         if($form->get('recall')->isClicked())
         {
             $boxName = $form->get('boxName')->getData();
-            $log = $formManager->addRecall($boxName);
+            $log = $rememberManager->addRecall($boxName);
         }
-        $items = $formManager->getItems();
+        $items = $rememberManager->getItems();
 
         return $this->renderForm('remember/index.html.twig',['form' => $form, 'boxes' => $items['boxes'], 'recalls' => $items['recalls'], 'log' => $log]);
     }

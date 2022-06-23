@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Box;
 use App\Entity\Recall;
 use App\Form\Type\EditType;
-use App\Service\FormManager;
+use App\Service\RememberManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,11 +15,11 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class BoxController extends AbstractController
 {
-    private FormManager $formManager;
+    private RememberManager $rememberManager;
 
-    function __construct(FormManager $formManager)
+    function __construct(RememberManager $rememberManager)
     {
-        $this->formManager = $formManager;
+        $this->rememberManager = $rememberManager;
     }
     /**
     * @Route("/delBox/{id}", name="remove_box")
@@ -44,7 +44,7 @@ class BoxController extends AbstractController
         $entityManager = $doctrine->getManager();
         $log = '';
 
-        $items = $this->formManager->getItems();
+        $items = $this->rememberManager->getItems();
 
         $editedBox = $entityManager->getRepository(Box::class)->find($id);
         $editForm = $this->createForm(EditType::class,$editedBox);
@@ -62,7 +62,5 @@ class BoxController extends AbstractController
         }
         
         return $this->renderForm('remember/index.html.twig',['editForm' => $editForm, 'editBox' => $editedBox, 'boxes' => $items['boxes'], 'recalls' => $items['recalls'], 'log' => $log]);
-
-        //return $this->renderForm('remember/edit.html.twig',['editForm' => $editForm, 'box' => $editedBox]);
     }
 }

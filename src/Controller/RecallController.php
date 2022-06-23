@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Recall;
-use App\Service\FormManager;
+use App\Service\RememberManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,11 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class RecallController extends AbstractController
 {
 
-    private $formManager;
+    private $rememberManager;
 
-    function __construct(FormManager $formManager)
+    function __construct(RememberManager $rememberManager)
     {
-        $this->formManager = $formManager;
+        $this->rememberManager = $rememberManager;
     }
         /**
          * @Route("/delRec/{id}", name="delete")
@@ -36,7 +36,7 @@ class RecallController extends AbstractController
          */
         public function urgRecall(int $id): Response
         {
-            $this->formManager->editRecallStatus('urgent',$id);
+            $this->rememberManager->editRecallStatus('urgent',$id);
             return $this->redirectToRoute('index');
         }
 
@@ -45,7 +45,7 @@ class RecallController extends AbstractController
          */
         public function doneRecall(int $id): Response
         {
-            $this->formManager->editRecallStatus('done',$id);
+            $this->rememberManager->editRecallStatus('done',$id);
             return $this->redirectToRoute('index');
         }
 
@@ -54,7 +54,7 @@ class RecallController extends AbstractController
          */
         public function progressRecall(int $id): Response
         {
-            $this->formManager->editRecallStatus('progress',$id);
+            $this->rememberManager->editRecallStatus('progress',$id);
             return $this->redirectToRoute('index');
         }
 
