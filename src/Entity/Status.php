@@ -27,9 +27,16 @@ class Status
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $main;
 
+    #[ORM\Column(type: 'boolean')]
+    private $active;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $icon;
+
     public function __construct()
     {
         $this->status_name = new ArrayCollection();
+        $this->active = 1;
     }
 
     public function getId(): ?int
@@ -99,6 +106,30 @@ class Status
     public function setMain(?bool $main): self
     {
         $this->main = $main;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    public function setIcon(string $icon): self
+    {
+        $this->icon = $icon;
 
         return $this;
     }
