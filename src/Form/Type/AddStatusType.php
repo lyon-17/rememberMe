@@ -19,7 +19,7 @@ class AddStatusType extends AbstractType
     {
         $builder
         ->add('name',TextType::class,['label' => 'name', 'attr' => ['class' => 'form-control']])
-        ->add('priority', NumberType::class,['label' => 'priority', 'attr' => ['class' => 'form-control']])
+        ->add('priority', NumberType::class,['html5' => true, 'label' => 'priority', 'attr' => ['class' => 'form-control']])
         ->add('add',SubmitType::class,['label' => 'Add', 'attr' => ['class' => 'btn btn-secondary']]);
     }
 

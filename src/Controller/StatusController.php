@@ -14,17 +14,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class StatusController extends AbstractController 
 {
 
-/**
+    /**
      * @Route("/status/addState", name="add_state")
      */
-    public function showStatus(ManagerRegistry $doctrine, Request $addRequest, StatusRepository $statusRepository)
+    public function addState(ManagerRegistry $doctrine, Request $addRequest, StatusRepository $statusRepository)
     {
         $entityManager = $doctrine->getManager();
         $addState = new Status();
         $addForm = $this->createForm(AddStatusType::class,$addState);
         $addForm->handleRequest($addRequest);
         $status = $statusRepository->findAll();
-
+        
         if($addForm->get('add')->isClicked())
         {
             $addState->setName($addForm->get('name')->getData());
@@ -85,6 +85,8 @@ class StatusController extends AbstractController
         $log = '';
 
         $removeState = $entityManager->getRepository(Status::class)->find($id);
+
+        $status = $statusRepository->findAll();
         //Default values cant be deleted
         if($removeState->getId() > 3 && !$removeState->isMain())
         {
@@ -93,9 +95,8 @@ class StatusController extends AbstractController
         }
         else{
             $log = 'Default values cannot be removed';
+            return $this->renderForm('remember/status.html.twig',['status' => $status, 'log' => $log]);
         }
-        $status = $statusRepository->findAll();
-        
-        return $this->renderForm('remember/status.html.twig',['status' => $status, 'log' => $log]);
+        return $this->redirectToRoute('status');
     }
 }
