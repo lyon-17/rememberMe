@@ -48,10 +48,11 @@ class RememberController extends AbstractController
     /**
      * @Route("/status", name="status")
      */
-    public function showStatus(StatusRepository $statusRepository): Response
+    public function showStatus(StatusRepository $statusRepository, StatusHelper $statusHelper): Response
     {
         $status = $statusRepository->findAll();
-        return $this->renderForm('remember/status.html.twig',['status' => $status]);
+        $icons = $statusHelper->generateIcons();
+        return $this->renderForm('remember/status.html.twig',['status' => $status, 'icons' => $icons]);
     }
 
 }

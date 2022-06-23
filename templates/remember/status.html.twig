@@ -11,6 +11,7 @@
             <tr>
                 <th>name</th>
                 <th>Priority</th>
+                <th>Icon</th>
                 <th colspan="3">Options</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
         <tr>
             <td><a class="stateName" href="/status/setMain/{{state.id}}">{{state.name}}</a></td>
             <td>{{state.priority}}</td>
+            <td><i class="bi {{ icons[state.icon] }}" style="font-size: 1.2rem;"></i></td>
             <td>
             {% if state.active == 0 %}
                 <a href="/status/active/{{state.id}}">Activate</a>
@@ -39,6 +41,7 @@
         {{ form_start(addForm) }}
             <td>{{ form_row(addForm.name) }}</td>
             <td>{{ form_row(addForm.priority) }}</td>
+            <td>{{ form_row(addForm.icon)}}</td>
             <td class="stateButton" colspan="2">{{ form_row(addForm.add) }}</td>
         {{ form_rest(addForm) }}
         </tr>

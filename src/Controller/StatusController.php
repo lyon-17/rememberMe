@@ -29,6 +29,7 @@ class StatusController extends AbstractController
         {
             $addState->setName($addForm->get('name')->getData());
             $addState->setPriority($addForm->get('priority')->getData());
+            $addState->setIcon($addForm->get('icon')->getData());
             $entityManager->persist($addState);
             $entityManager->flush();
             return $this->redirectToRoute('status');

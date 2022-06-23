@@ -6,7 +6,7 @@ class StatusHelper
 {
     public function generateIcons()
     {
-        $stateIcons = [
+        return [
             'minus_gear' => "bi-patch-minus-fill",
             'clock' => "bi bi-stopwatch-fill",
             'progress' => "bi bi-app-indicator",
@@ -33,6 +33,35 @@ class StatusHelper
             'question' => "bi bi-question-octagon-fill",
             'star' => "bi bi-star-fill"
         ];
-        return $stateIcons;
+    }
+    public function generatePicker()
+    {
+        return [
+            'minus gear' => "minus_gear",
+            'clock' => "clock",
+            'progress' => "progress",
+            'archive' => "archive",
+            'arrow down' => "arrow_down",
+            'arrow up' => "arrow_up",
+            'backspace' => "backspace",
+            'medal' => "medal",
+            'chart' => "chart",
+            'bell' => "bell",
+            'bookmark' => "bookmark",
+            'bucket' => "bucket",
+            'calendar' => "calendar",
+            'arrow' => "arrow",
+            'chat' => "chat",
+            'check' => "check",
+            'clipboard' => "clipboard",
+            'minus' => "minus",
+            'alert' => "alert",
+            'gear' => "gear",
+            'info' =>  "info",
+            'lighting' => "lighting",
+            'megaphone' => "megaphone",
+            'question' => "question",
+            'star' => "star"
+        ];
     }
 }
