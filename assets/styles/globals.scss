@@ -103,12 +103,21 @@ body{
     }
 }
 
-#statusLink{
 #show_button{
     color: $link-color;
     background-color: $back-color;
     margin: $small-margin;
 }
+
+.pageLink{
     color: $link-color;
     text-decoration-line: none;
+    &:hover
+    {
+        color: $link-color;
+    }
+}
+
+.stateButton > div{
+    margin-top: 20px;
 }

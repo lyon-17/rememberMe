@@ -5,9 +5,6 @@ namespace App\Controller;
 use App\Entity\Box;
 use App\Entity\Recall;
 use App\Form\Type\EditType;
-use App\Form\Type\CreateType;
-use App\Repository\BoxRepository;
-use App\Repository\RecallRepository;
 use App\Service\FormManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,7 +46,6 @@ class BoxController extends AbstractController
 
         $items = $this->formManager->getItems();
 
-        $entityManager = $doctrine->getManager();
         $editedBox = $entityManager->getRepository(Box::class)->find($id);
         $editForm = $this->createForm(EditType::class,$editedBox);
         $editForm->handleRequest($editRequest);

@@ -1,9 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <div id="base">
-    <p>log:</p>
     {% if log is defined %}
-    <p id="log">{{log}}</p>
+    <p class="log">{{log}}</p>
     {% endif %}
     <div id="appContent">
         {% if form is defined %}
@@ -31,7 +30,7 @@
         </div>
         {% endif %}
         <h4>Status options</h4>
-        <a id="statusLink" href="status">Configure status</a>
+        <a class="pageLink" href="status">Configure status</a>
         {% if boxes is defined %}
         <div id="boxes" class="container">
             <div class="row">

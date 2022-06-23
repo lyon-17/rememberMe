@@ -47,14 +47,19 @@ class FormManager
         $entityManager->flush();
         return 'new recall added in '.$name;
     }
+    /**
+     * Given an status and recall id changes the recall state
+     * @param string $status name of the state to change
+     * @param int $id id of the recall
+     */
 
     public function editRecallStatus(string $status, int $id) : void
     {
         $entityManager = $this->doctrine->getManager();
-        $urgentRecall = $entityManager->getRepository(Recall::class)->find($id);
+        $editRecall = $entityManager->getRepository(Recall::class)->find($id);
         $state = $entityManager->getRepository(Status::class)->findOneBy(['name' => $status]);
-        $urgentRecall->setStatus($state->getName());
-        $urgentRecall->setState($state);
+        $editRecall->setStatus($state->getName());
+        $editRecall->setState($state);
         $entityManager->flush();
         return;
     }
