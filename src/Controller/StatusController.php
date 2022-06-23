@@ -6,6 +6,7 @@ use App\Form\Type\StatusType;
 use App\Form\Type\AddStatusType;
 use App\Entity\Status;
 use App\Repository\StatusRepository;
+use App\Service\StatusHelper;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +55,7 @@ class StatusController extends AbstractController
     /**
      * @Route("/status/edState/{id}", name="editState")
      */
-    public function editState(ManagerRegistry $doctrine, Request $request, StatusRepository $statusRepository, int $id)
+    public function editState(ManagerRegistry $doctrine, Request $request, StatusRepository $statusRepository, StatusHelper $statusHelper, int $id)
     {
         $entityManager = $doctrine->getManager();
         $log = '';
@@ -74,8 +75,9 @@ class StatusController extends AbstractController
         {
             return $this->redirectToRoute('status');
         }
+        $icons = $statusHelper->generateIcons();
         
-        return $this->renderForm('remember/status.html.twig',['editForm' => $editForm, 'editState' => $editState, 'status' => $status, 'log' => $log]);
+        return $this->renderForm('remember/status.html.twig',['editForm' => $editForm, 'editState' => $editState, 'status' => $status, 'icons' => $icons]);
     }
     /**
      * @Route("/status/delState/{id}", name="deleteState")
