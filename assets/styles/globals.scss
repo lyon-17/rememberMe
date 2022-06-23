@@ -38,9 +38,13 @@ body{
 }
 
 #create_{
-    &new, &recall{
+    &new, &recall, &state{
         background-color: $back-color;
         color: $link-color;
+    }
+    &state > a{
+        color: $link-color;
+        text-decoration: none;
     }
 }
 

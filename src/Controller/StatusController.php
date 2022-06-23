@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\StatusType;
+use App\Form\Type\AddStatusType;
 use App\Entity\Status;
 use App\Repository\StatusRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -12,6 +13,28 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StatusController extends AbstractController 
 {
+
+/**
+     * @Route("/status/addState", name="add_state")
+     */
+    public function showStatus(ManagerRegistry $doctrine, Request $addRequest, StatusRepository $statusRepository)
+    {
+        $entityManager = $doctrine->getManager();
+        $addState = new Status();
+        $addForm = $this->createForm(AddStatusType::class,$addState);
+        $addForm->handleRequest($addRequest);
+        $status = $statusRepository->findAll();
+
+        if($addForm->get('add')->isClicked())
+        {
+            $addState->setName($addForm->get('name')->getData());
+            $addState->setPriority($addForm->get('priority')->getData());
+            $entityManager->persist($addState);
+            $entityManager->flush();
+            return $this->redirectToRoute('status');
+        }
+        return $this->renderForm('remember/status.html.twig',['addForm' => $addForm, 'status' => $status]);
+    }
 
     /**
      * @Route("/status/edState/{id}", name="editState")

@@ -26,10 +26,24 @@
         </tr>
         {% endif %}
     {% endfor %}
+    {% if addForm is defined %}
+        <tr>
+        {{ form_start(addForm) }}
+            <td>{{ form_row(addForm.name) }}</td>
+            <td>{{ form_row(addForm.priority) }}</td>
+            <td colspan="2">{{ form_row(addForm.add) }}</td>
+        {{ form_rest(addForm) }}
+        </tr>
+    {% endif %}
         </tbody>
     </table>
 {% else %}
 <p>No status found</p>
+{% endif %}
+{% if addForm is not defined %}
+    <button id="create_state"><a href="status/addState">New state</a></button>
+{% else %}
+<a class="pageLink" href="/status">Return</a>
 {% endif %}
 <a class="pageLink" href="/">Go to main</a>
 {% endblock %}
