@@ -6,6 +6,7 @@ use App\Entity\Box;
 use App\Form\Type\CreateType;
 use App\Repository\StatusRepository;
 use App\Service\RememberManager;
+use App\Service\StatusHelper;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,7 @@ class RememberController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function showIndex(ManagerRegistry $doctrine, Request $boxRequest, RememberManager $rememberManager): Response
+    public function showIndex(ManagerRegistry $doctrine, Request $boxRequest, StatusRepository $statusRepository, RememberManager $rememberManager, StatusHelper $statusHelper): Response
     {
         $box = new Box();
         $box->setName('New box');
@@ -38,8 +39,10 @@ class RememberController extends AbstractController
             $log = $rememberManager->addRecall($boxName);
         }
         $items = $rememberManager->getItems();
+        $status = $statusRepository->findBy(['active' => true]);
+        $icons = $statusHelper->generateIcons();
 
-        return $this->renderForm('remember/index.html.twig',['form' => $form, 'boxes' => $items['boxes'], 'recalls' => $items['recalls'], 'log' => $log]);
+        return $this->renderForm('remember/index.html.twig',['form' => $form, 'boxes' => $items['boxes'], 'recalls' => $items['recalls'], 'status' => $status, 'statusIcons' => $icons ,'log' => $log]);
     }
 
     /**
