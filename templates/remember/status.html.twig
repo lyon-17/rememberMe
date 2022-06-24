@@ -31,8 +31,10 @@
                 <a href="/status/deactive/{{state.id}}">Deactivate</a>
             {% endif %}
             </td>
+            {% if state.id > 3 %}
             <td><a href="/status/edState/{{state.id}}">edit</td>
             <td><a href="/status/delState/{{state.id}}">delete</td>
+            {% endif %}
         </tr>
         {% endif %}
     {% endfor %}
