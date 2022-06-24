@@ -14,6 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StatusController extends AbstractController 
 {
+    private $statusHelper;
+
+    function __construct(StatusHelper $statusHelper)
+    {
+        $this->statusHelper = $statusHelper;
+    }
      /**
      * @Route("/status/addState", name="add_state")
      */
@@ -25,6 +31,7 @@ class StatusController extends AbstractController
         $addForm = $this->createForm(AddStatusType::class,$addState);
         $addForm->handleRequest($addRequest);
         $status = $statusRepository->findAll();
+        $icons = $this->statusHelper->generateIcons();
         
         if($addForm->get('add')->isClicked())
         {
@@ -35,20 +42,15 @@ class StatusController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('status');
         }
-        return $this->renderForm('remember/status.html.twig',['addForm' => $addForm, 'status' => $status]);
+        return $this->renderForm('remember/status.html.twig',['addForm' => $addForm, 'status' => $status, 'icons' => $icons]);
     }
 
     /**
      * @Route("/status/setMain/{id}", name="main_state")
      */
-    public function setStateMain(ManagerRegistry $doctrine, StatusRepository $statusRepository, int $id)
+    public function setStateMain(int $id)
     {
-        $entityManager = $doctrine->getManager();
-        $mainState = $statusRepository->find($id);
-        $removeState = $statusRepository->getMain();
-        $removeState->setMain(false);
-        $mainState->setMain(true);
-        $entityManager->flush();
+        $this->statusHelper->setStateMain($id);
         return $this->redirectToRoute('status');
     }
 
@@ -58,7 +60,6 @@ class StatusController extends AbstractController
     public function editState(ManagerRegistry $doctrine, Request $request, StatusRepository $statusRepository, StatusHelper $statusHelper, int $id)
     {
         $entityManager = $doctrine->getManager();
-        $log = '';
 
         $editState = $entityManager->getRepository(Status::class)->find($id);
         $status = $statusRepository->findAll();
@@ -82,23 +83,14 @@ class StatusController extends AbstractController
     /**
      * @Route("/status/delState/{id}", name="deleteState")
      */
-    public function delState(ManagerRegistry $doctrine, StatusRepository $statusRepository, int $id)
+    public function delState(StatusRepository $statusRepository, int $id)
     {
-        $entityManager = $doctrine->getManager();
-        $log = '';
-
-        $removeState = $entityManager->getRepository(Status::class)->find($id);
-
+        $removed = $this->statusHelper->deleteState($id);
         $status = $statusRepository->findAll();
-        //Default values cant be deleted
-        if($removeState->getId() > 3 && !$removeState->isMain())
+
+        if(!$removed)
         {
-            $entityManager->remove($removeState);
-            $entityManager->flush();
-        }
-        else{
-            $log = 'Default values cannot be removed';
-            return $this->renderForm('remember/status.html.twig',['status' => $status, 'log' => $log]);
+            return $this->renderForm('remember/status.html.twig',['status' => $status, 'log' => 'default values cant be removed']);
         }
         return $this->redirectToRoute('status');
     }
@@ -106,24 +98,18 @@ class StatusController extends AbstractController
     /**
      * @Route("/status/active/{id}", name="active_state")
      */
-    public function activeState(ManagerRegistry $doctrine, int $id)
+    public function activeState(int $id)
     {
-        $entityManager = $doctrine->getManager();
-        $inactiveState = $entityManager->getRepository(Status::class)->find($id);
-        $inactiveState->setActive(true);
-        $entityManager->flush();
+        $this->statusHelper->setStateActive($id, true);
         return $this->redirectToRoute('status');
     }
 
     /**
      * @Route("/status/deactive/{id}", name="desactivate_state")
      */
-    public function desactivateState(ManagerRegistry $doctrine, int $id)
+    public function desactivateState(int $id)
     {
-        $entityManager = $doctrine->getManager();
-        $inactiveState = $entityManager->getRepository(Status::class)->find($id);
-        $inactiveState->setActive(false);
-        $entityManager->flush();
+        $this->statusHelper->setStateActive($id, false);
         return $this->redirectToRoute('status');
     }
 }

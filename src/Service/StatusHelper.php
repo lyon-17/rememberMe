@@ -2,8 +2,56 @@
 
 namespace App\Service;
 
+use App\Repository\StatusRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Status;
+
 class StatusHelper
 {
+    private $doctrine;
+    private $statusRepository;
+
+    function __construct(ManagerRegistry $doctrine, StatusRepository $statusRepository)
+    {
+        $this->doctrine = $doctrine;
+        $this->statusRepository = $statusRepository;
+    }
+
+    public function deleteState(int $id)
+    {
+        $entityManager = $this->doctrine->getManager();
+        $removeState = $entityManager->getRepository(Status::class)->find($id);
+
+        //Default values cant be deleted
+        if($removeState->getId() > 3 && !$removeState->isMain())
+        {
+            $entityManager->remove($removeState);
+            $entityManager->flush();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function setStateActive(int $id, bool $active)
+    {
+        $entityManager = $this->doctrine->getManager();
+        $inactiveState = $entityManager->getRepository(Status::class)->find($id);
+        $inactiveState->setActive($active);
+        $entityManager->flush();
+    }
+
+    public function setStateMain(int $id)
+    {
+        $entityManager = $this->doctrine->getManager();
+        $mainState = $this->statusRepository->find($id);
+        $removeState = $this->statusRepository->getMain();
+        $removeState->setMain(false);
+        $mainState->setMain(true);
+        $entityManager->flush();
+    }
+
     public function generateIcons()
     {
         return [
