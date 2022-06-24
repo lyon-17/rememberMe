@@ -17,18 +17,9 @@ export default class extends Controller {
   }
   show() {
     const element = this.doneTargets;
-    const log = document.getElementById('log');
-    if(element.length == 0)
-    {
-      log.innerHTML = 'No done recalls found';
-    }
-    else
-    {
-      log.innerHTML = "Displaying done recalls";
       element.forEach(element => {
         element.setAttribute('class','rec_done_show');
       });
     }
 
   }
-}
