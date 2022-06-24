@@ -29,29 +29,11 @@ class RecallController extends AbstractController
         }
 
         /**
-         * @Route("/updRec/{id}/urgent", name="urgent_recall")
+         * @Route("/updRec/{id}/{status}", name="upd_recall")
          */
-        public function urgRecall(int $id): Response
+        public function updStateRecall(int $id, string $status): Response
         {
-            $this->rememberManager->editRecallStatus('urgent',$id);
-            return $this->redirectToRoute('index');
-        }
-
-        /**
-         * @Route("/updRec/{id}/done", name="done_recall")
-         */
-        public function doneRecall(int $id): Response
-        {
-            $this->rememberManager->editRecallStatus('done',$id);
-            return $this->redirectToRoute('index');
-        }
-
-        /**
-         * @Route("/updRec/{id}/progress", name="progress_recall")
-         */
-        public function progressRecall(int $id): Response
-        {
-            $this->rememberManager->editRecallStatus('progress',$id);
+            $this->rememberManager->editRecallStatus($status,$id);
             return $this->redirectToRoute('index');
         }
 
