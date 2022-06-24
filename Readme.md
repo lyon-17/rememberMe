@@ -1,2 +1,2 @@
 # RememberMe
-A simple application which allows to create/edit and remove boxes and recalls.
+An application for managing tasks made with Symfony 6.1
