@@ -27,6 +27,9 @@ class Recall
     
     private $boxName;
 
+    #[ORM\Column(type: 'string', length: 2048)]
+    private $description;
+
     public function getBoxName(): ?string
     {
         return $this->boxName;
@@ -88,6 +91,18 @@ class Recall
     public function setState(?Status $state): self
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
