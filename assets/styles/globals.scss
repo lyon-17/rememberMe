@@ -83,6 +83,39 @@ body{
             display: block;
         }
     }
+    &desc{
+        background-color: $back-color;
+        border: 3px solid rgb(87, 84, 84);
+        border-radius: 2%;
+        color: $font-color;
+        cursor: default;
+        display: block;
+        margin-left: $small-margin;
+        min-height: 10em;
+        min-width: 20em;
+        padding: 5px;
+        resize: none;
+    }
+    &edit{
+        background-color: $back-color;
+        border: 3px solid rgb(87, 84, 84);
+        border-radius: 2%;
+        color: $font-color;
+        margin: $small-margin;
+        min-width: 20em;
+        max-width: 24em;
+        padding: 5px;
+        &:focus{
+            color: $font-color;
+            background-color: dimgray;
+        }
+    }
+    &display{
+        display: none;
+    }
+    &name:hover{
+        cursor: pointer;
+    }
 }
 
 .recalls{
@@ -92,6 +125,9 @@ body{
         color:rgb(250, 252, 133);
         margin: $small-margin;
         border-bottom: 2px solid $recall-color;
+    }
+    & a{
+        margin-left: $small-margin;
     }
 }
 

@@ -53,7 +53,8 @@
                                         {% elseif  recall.status == "done" %}
                                             <div data-box-target="done" class="rec_done">
                                         {% endif %}
-                                        <p>{{recall.name}}
+                                        <p>
+                                            <span onclick="document.getElementById('desc{{recall.id}}').classList.toggle('rec_display')" class="rec_name" title="show details">{{recall.name}}</span>
                                             <a href="/delRec/{{recall.id}}" title="delete"><i class="bi bi-patch-minus-fill" style="font-size: 1.2rem; color: cornflowerblue;"></i></a>
                                             {% if recall.status != "done" %}
                                                 {% for state in status %}
@@ -68,13 +69,23 @@
                                         {% if recall.status == "urgent" or recall.status == "done" %}
                                             </div>
                                         {% endif %}
+                                        {% if recDesc is defined and recDesc == recall %}
+                                            {{ form(editDesc) }}
+                                        {% endif %}
                                     {% endif %}
+                                    <div id="desc{{recall.id}}" class="rec_display">
+                                        <textarea readonly class="rec_desc">{{recall.description}}</textarea>
+                                        <a class="pageLink" href="updDesc/{{recall.id}}">Modify</a>
+                                    </div>
                             {% endfor %}
                         <button data-action="click->box#show" id="show_button">Show done recalls</button>
                         </div>
                     </div>
                     {% endif %}
                 {% endfor %}
+                {% if desc is defined %}
+                    {{ form(desc) }}
+                {% endif %}
             </div>
         </div>
         {% else %}
