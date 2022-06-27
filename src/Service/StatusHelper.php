@@ -54,7 +54,11 @@ class StatusHelper
 
     public function generateIcons()
     {
-        return [
+
+        $status = $this->statusRepository->findBy(['active' => true],['priority' => 'ASC']);
+
+        return ['status' => $status, 'icons' =>
+            [
             'minus_gear' => "bi-patch-minus-fill",
             'clock' => "bi bi-stopwatch-fill",
             'progress' => "bi bi-app-indicator",
@@ -80,6 +84,7 @@ class StatusHelper
             'megaphone' => "bi bi-megaphone-fill",
             'question' => "bi bi-question-octagon-fill",
             'star' => "bi bi-star-fill"
+            ]
         ];
     }
     public function generatePicker()

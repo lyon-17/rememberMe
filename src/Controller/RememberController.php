@@ -39,15 +39,14 @@ class RememberController extends AbstractController
             $log = $rememberManager->addRecall($boxName);
         }
         $items = $rememberManager->getItems();
-        $status = $statusRepository->findBy(['active' => true]);
-        $icons = $statusHelper->generateIcons();
+        $statusList = $statusHelper->generateIcons();
 
         return $this->renderForm('remember/index.html.twig',[
             'form' => $form,
             'boxes' => $items['boxes'],
             'recalls' => $items['recalls'],
-            'status' => $status,
-            'statusIcons' => $icons,
+            'status' => $statusList['status'],
+            'statusIcons' => $statusList['icons'],
             'log' => $log,
         ]);
     }
@@ -58,8 +57,12 @@ class RememberController extends AbstractController
     public function showStatus(StatusRepository $statusRepository, StatusHelper $statusHelper): Response
     {
         $status = $statusRepository->findAll();
-        $icons = $statusHelper->generateIcons();
-        return $this->renderForm('remember/status.html.twig',['status' => $status, 'icons' => $icons]);
+        $stateMain = $statusRepository->getMain();
+        $statusList = $statusHelper->generateIcons();
+        return $this->renderForm('remember/status.html.twig',[
+            'status' => $statusList['status'],
+            'stateMain' => $stateMain,
+            'icons' => $statusList['icons']]);
     }
 
 }

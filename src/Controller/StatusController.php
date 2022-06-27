@@ -30,8 +30,8 @@ class StatusController extends AbstractController
         $addState = new Status();
         $addForm = $this->createForm(AddStatusType::class,$addState);
         $addForm->handleRequest($addRequest);
-        $status = $statusRepository->findAll();
-        $icons = $this->statusHelper->generateIcons();
+        $stateMain = $statusRepository->getMain();
+        $statusList = $this->statusHelper->generateIcons();
         
         if($addForm->get('add')->isClicked())
         {
@@ -42,7 +42,11 @@ class StatusController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('status');
         }
-        return $this->renderForm('remember/status.html.twig',['addForm' => $addForm, 'status' => $status, 'icons' => $icons]);
+        return $this->renderForm('remember/status.html.twig',[
+            'addForm' => $addForm, 
+            'status' => $statusList['status'], 
+            'stateMain' => $stateMain,
+            'icons' => $statusList['icons']]);
     }
 
     /**
