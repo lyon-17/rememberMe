@@ -46,39 +46,47 @@
                             <a href="/delBox/{{box.id}}" title="Delete"><i class="bi bi-dash-circle-fill" style="font-size: 2rem; color: cornflowerblue;"></i></a>
                             <a href="/updBox/{{box.id}}" title="Edit box"><i class="bi bi-gear-fill" style="font-size: 2rem; color: cornflowerblue;"></i></a>
                         <div class="recalls">
+                        {% for state in status %}
+                            {% if state.name != "done" %}
+                                <p class="state_title">{{state.name}}</p>
+                            {% endif %}
                             {% for recall in recalls %}
-                                    {% if box == recall.targetBox %}
-                                        {% if recall.status == "urgent" %}
-                                            <div class="rec_urgent">
-                                        {% elseif  recall.status == "done" %}
-                                            <div data-box-target="done" class="rec_done">
+                                {% if box == recall.targetBox and recall.status == state.name %}
+                                    {% if recall.status == "urgent" %}
+                                        <div class="rec_urgent">
+                                    {% elseif  recall.status == "done" %}
+                                        <div data-box-target="done" class="rec_done">
+                                    {% endif %}
+                                    <p>
+                                        <span onclick="document.getElementById('desc{{recall.id}}').classList.toggle('rec_display')" class="rec_name" title="show details">{{recall.name}}</span>
+                                        <a href="/delRec/{{recall.id}}" title="delete"><i class="bi bi-patch-minus-fill" style="font-size: 1.2rem; color: cornflowerblue;"></i></a>
+                                        {% if recall.status != "done" %}
+                                            {% for state in status %}
+                                                {% if state.name != "done" %}
+                                                    <a href="/updRec/{{recall.id}}/{{state.name}}" title={{state.name}}><i class="bi {{ statusIcons[state.icon] }}" style="font-size: 1.2rem; color: burlywood;"></i></a>
+                                                    {% else %}
+                                                    <a href="/updRec/{{recall.id}}/{{state.name}}" title={{state.name}}><i class="bi {{ statusIcons[state.icon] }}" style="font-size: 1.2rem; color: darkseagreen;"></i></a>
+                                                {% endif %}
+                                            {% endfor %}
                                         {% endif %}
-                                        <p>
-                                            <span onclick="document.getElementById('desc{{recall.id}}').classList.toggle('rec_display')" class="rec_name" title="show details">{{recall.name}}</span>
-                                            <a href="/delRec/{{recall.id}}" title="delete"><i class="bi bi-patch-minus-fill" style="font-size: 1.2rem; color: cornflowerblue;"></i></a>
-                                            {% if recall.status != "done" %}
-                                                {% for state in status %}
-                                                    {% if state.name != "done" %}
-                                                        <a href="/updRec/{{recall.id}}/{{state.name}}" title={{state.name}}><i class="bi {{ statusIcons[state.icon] }}" style="font-size: 1.2rem; color: burlywood;"></i></a>
-                                                        {% else %}
-                                                        <a href="/updRec/{{recall.id}}/{{state.name}}" title={{state.name}}><i class="bi {{ statusIcons[state.icon] }}" style="font-size: 1.2rem; color: darkseagreen;"></i></a>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-                                        </p>
-                                        {% if recall.status == "urgent" or recall.status == "done" %}
-                                            </div>
-                                        {% endif %}
-                                        {% if recDesc is defined and recDesc == recall %}
-                                            {{ form(editDesc) }}
-                                        {% endif %}
-                                        <div id="desc{{recall.id}}" class="rec_display">
-                                            <textarea readonly class="rec_desc">{{recall.description}}</textarea>
-                                            <a class="pageLink" href="updDesc/{{recall.id}}">Modify</a>
+                                    </p>
+                                    {% if recall.status == "urgent" or recall.status == "done" %}
                                         </div>
                                     {% endif %}
+                                    
+                                    {% if recDesc is defined and recDesc == recall %}
+                                        {{ form(editDesc) }}
+                                    {% endif %}
+                                    <div id="desc{{recall.id}}" class="rec_display">
+                                        <textarea readonly class="rec_desc">{{recall.description}}</textarea>
+                                        {% if recall.status != "done" %}
+                                            <a class="pageLink" href="updDesc/{{recall.id}}">Modify</a>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
                             {% endfor %}
-                        <button data-action="click->box#show" id="show_button">Show done recalls</button>
+                        {% endfor %}
+                        <button data-action="click->box#show" data-box-target="showButton" id="show_button">Show done recalls</button>
                         </div>
                     </div>
                     {% endif %}
