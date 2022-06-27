@@ -42,7 +42,14 @@ class RememberController extends AbstractController
         $status = $statusRepository->findBy(['active' => true]);
         $icons = $statusHelper->generateIcons();
 
-        return $this->renderForm('remember/index.html.twig',['form' => $form, 'boxes' => $items['boxes'], 'recalls' => $items['recalls'], 'status' => $status, 'statusIcons' => $icons ,'log' => $log]);
+        return $this->renderForm('remember/index.html.twig',[
+            'form' => $form,
+            'boxes' => $items['boxes'],
+            'recalls' => $items['recalls'],
+            'status' => $status,
+            'statusIcons' => $icons,
+            'log' => $log,
+        ]);
     }
 
     /**

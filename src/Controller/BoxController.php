@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Box;
 use App\Form\Type\EditType;
+use App\Repository\StatusRepository;
 use App\Service\RememberManager;
+use App\Service\StatusHelper;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,9 +33,13 @@ class BoxController extends AbstractController
     /**
     * @Route("/updBox/{id}", name="update_box")
     */
-    public function updateBox(ManagerRegistry $doctrine, int $id, Request $editRequest): Response
+    public function updateBox(ManagerRegistry $doctrine, StatusRepository $statusRepository, StatusHelper $statusHelper, string $id, Request $editRequest): Response
     {
-
+    
+        if($id == "status")
+        {
+            return $this->redirectToRoute('status');
+        }
         $entityManager = $doctrine->getManager();
         $log = '';
 
@@ -53,7 +59,17 @@ class BoxController extends AbstractController
         {
             return $this->redirectToRoute('index');
         }
+
+        $status = $statusRepository->findAll();
+        $icons = $statusHelper->generateIcons();
         
-        return $this->renderForm('remember/index.html.twig',['editForm' => $editForm, 'editBox' => $editedBox, 'boxes' => $items['boxes'], 'recalls' => $items['recalls'], 'log' => $log]);
+        return $this->renderForm('remember/index.html.twig',[
+            'editForm' => $editForm,
+            'editBox' => $editedBox,
+            'boxes' => $items['boxes'],
+            'recalls' => $items['recalls'],
+            'status' => $status,
+            'statusIcons' => $icons,
+            'log' => $log]);
     }
 }
