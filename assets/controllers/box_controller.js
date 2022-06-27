@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-  static targets = [ "list","done" ];
+  static targets = [ "list","done","showButton" ];
 
   addRecall()
   {
@@ -17,9 +17,11 @@ export default class extends Controller {
   }
   show() {
     const element = this.doneTargets;
+    const button = this.showButtonTarget;
       element.forEach(element => {
         element.setAttribute('class','rec_done_show');
       });
+      button.setAttribute('style','display:none');
     }
 
-  }
+}
