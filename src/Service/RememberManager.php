@@ -61,6 +61,7 @@ class RememberManager
         $recall = new Recall();
         $recall->setName('new recall');
         $recall->setStatus($this->statusRepository->getMain()->getName());
+        $recall->setDescription('');
         $box = $this->boxRepository->findOneBy(['name' => $name]);
         $state = $this->statusRepository->findOneBy(['name' => $recall->getStatus()]);
         $recall->setState($state);

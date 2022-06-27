@@ -72,11 +72,11 @@
                                         {% if recDesc is defined and recDesc == recall %}
                                             {{ form(editDesc) }}
                                         {% endif %}
+                                        <div id="desc{{recall.id}}" class="rec_display">
+                                            <textarea readonly class="rec_desc">{{recall.description}}</textarea>
+                                            <a class="pageLink" href="updDesc/{{recall.id}}">Modify</a>
+                                        </div>
                                     {% endif %}
-                                    <div id="desc{{recall.id}}" class="rec_display">
-                                        <textarea readonly class="rec_desc">{{recall.description}}</textarea>
-                                        <a class="pageLink" href="updDesc/{{recall.id}}">Modify</a>
-                                    </div>
                             {% endfor %}
                         <button data-action="click->box#show" id="show_button">Show done recalls</button>
                         </div>
